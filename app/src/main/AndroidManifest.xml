@@ -25,7 +25,7 @@
 
         <activity
             android:name=".ui.ImageActivity"
-            android:theme="@style/AppThemeNoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 
