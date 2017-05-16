@@ -12,11 +12,11 @@ import android.widget.ImageView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import pl.kitek.gallery.data.GalleryItem
-import timber.log.Timber
 
-class ImagePagerAdapter(private val activity: Activity,
-                        private val items: List<GalleryItem>,
-                        private val currentPos: Int) : PagerAdapter() {
+class ImagePagerAdapter(
+        private val activity: Activity,
+        private val items: List<GalleryItem>,
+        private val currentPos: Int) : PagerAdapter() {
 
 
     private val views = SparseArray<View?>(items.size)
@@ -44,8 +44,7 @@ class ImagePagerAdapter(private val activity: Activity,
                     }
 
                     override fun onError() {
-                        Timber.d("FAILED: ${item.id} ")
-//                        ActivityCompat.startPostponedEnterTransition(activity)
+                        ActivityCompat.startPostponedEnterTransition(activity)
                     }
                 })
 

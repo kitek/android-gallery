@@ -19,17 +19,17 @@ import pl.kitek.gallery.ui.adapter.ImagePagerAdapter
 
 class ImageActivity : AppCompatActivity() {
 
-    private var mIsReturning: Boolean = false
-    private var mStartingPosition: Int = 0
-    private var mCurrentPosition: Int = 0
+    private var isReturning: Boolean = false
+    private var startingPosition: Int = 0
+    private var currentPosition: Int = 0
 
     private var imagePagerAdapter: ImagePagerAdapter? = null
     private val enterElementCallback: SharedElementCallback = object : SharedElementCallback() {
         override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {
-            if (mIsReturning) {
-                val sharedElement = imagePagerAdapter?.getView(mCurrentPosition)
+            if (isReturning) {
+                val sharedElement = imagePagerAdapter?.getView(currentPosition)
 
-                if (mStartingPosition != mCurrentPosition) {
+                if (startingPosition != currentPosition) {
                     names.clear()
                     names.add(ViewCompat.getTransitionName(sharedElement))
 
@@ -48,30 +48,28 @@ class ImageActivity : AppCompatActivity() {
         setupToolBar()
 
         val index = DataSource.ITEMS.indexOfFirst { it.id == intent.getIntExtra(ITEM_ID, 0) }
-        mStartingPosition = if (index > 0) index else 0
+        startingPosition = if (index > 0) index else 0
         if (savedInstanceState == null) {
-            mCurrentPosition = mStartingPosition
+            currentPosition = startingPosition
         } else {
-            mCurrentPosition = savedInstanceState.getInt(STATE_CURRENT_PAGE_POSITION)
+            currentPosition = savedInstanceState.getInt(SAVED_CURRENT_PAGE_POSITION)
         }
 
-        imagePagerAdapter = ImagePagerAdapter(this, DataSource.ITEMS, mCurrentPosition)
+        imagePagerAdapter = ImagePagerAdapter(this, DataSource.ITEMS, currentPosition)
         viewPager.adapter = imagePagerAdapter
-        viewPager.currentItem = mCurrentPosition
+        viewPager.currentItem = currentPosition
         viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
-                mCurrentPosition = position
+                currentPosition = position
             }
         })
-
-
     }
 
     override fun finishAfterTransition() {
-        mIsReturning = true
+        isReturning = true
         val data = Intent()
-        data.putExtra(EXTRA_STARTING_ALBUM_POSITION, mStartingPosition)
-        data.putExtra(EXTRA_CURRENT_ALBUM_POSITION, mCurrentPosition)
+        data.putExtra(EXTRA_STARTING_ALBUM_POSITION, startingPosition)
+        data.putExtra(EXTRA_CURRENT_ALBUM_POSITION, currentPosition)
         setResult(Activity.RESULT_OK, data)
         super.finishAfterTransition()
     }
@@ -103,6 +101,6 @@ class ImageActivity : AppCompatActivity() {
     companion object {
         const val ITEM_ID = "itemId"
 
-        private const val STATE_CURRENT_PAGE_POSITION = "state_current_page_position"
+        private const val SAVED_CURRENT_PAGE_POSITION = "current_page_position"
     }
 }

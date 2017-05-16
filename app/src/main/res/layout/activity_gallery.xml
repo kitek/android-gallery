@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="@bool/isFitSystemWindows">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/imageView"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:contentDescription="@string/app_name"/>-->
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
