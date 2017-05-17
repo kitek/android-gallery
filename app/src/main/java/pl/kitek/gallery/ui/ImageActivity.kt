@@ -22,8 +22,8 @@ class ImageActivity : AppCompatActivity() {
     private var isReturning: Boolean = false
     private var startingPosition: Int = 0
     private var currentPosition: Int = 0
-
     private var imagePagerAdapter: ImagePagerAdapter? = null
+
     private val enterElementCallback: SharedElementCallback = object : SharedElementCallback() {
         override fun onMapSharedElements(names: MutableList<String>, sharedElements: MutableMap<String, View>) {
             if (isReturning) {
@@ -63,6 +63,11 @@ class ImageActivity : AppCompatActivity() {
                 currentPosition = position
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putInt(SAVED_CURRENT_PAGE_POSITION, currentPosition)
     }
 
     override fun finishAfterTransition() {
