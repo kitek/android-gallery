@@ -49,11 +49,7 @@ class ImageActivity : AppCompatActivity() {
 
         val index = DataSource.ITEMS.indexOfFirst { it.id == intent.getIntExtra(ITEM_ID, 0) }
         startingPosition = if (index > 0) index else 0
-        if (savedInstanceState == null) {
-            currentPosition = startingPosition
-        } else {
-            currentPosition = savedInstanceState.getInt(SAVED_CURRENT_PAGE_POSITION)
-        }
+        currentPosition = savedInstanceState?.getInt(SAVED_CURRENT_PAGE_POSITION) ?: startingPosition
 
         imagePagerAdapter = ImagePagerAdapter(this, DataSource.ITEMS, currentPosition)
         viewPager.adapter = imagePagerAdapter
